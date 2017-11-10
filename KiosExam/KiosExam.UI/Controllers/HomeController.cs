@@ -16,11 +16,10 @@ namespace KiosExam.UI.Controllers
 
         }
         public ActionResult Index()
-        {
-            string apiUrl = "https://api.stackexchange.com/2.2/questions?page=1&pagesize=50&order=desc&sort=creation&tagged=asp.net&site=stackoverflow";
-            var result = _exam.GetItems(apiUrl);
+        {            
             return View();
         }
+
 
         public ActionResult About()
         {

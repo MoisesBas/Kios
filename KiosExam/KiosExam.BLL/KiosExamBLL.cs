@@ -20,11 +20,11 @@ namespace KiosExam.BLL
             _context = repo;
         }
 
-        public RootObject[] GetItems(string url)
+        public RootObject GetItems(string url)
         {
             var response = _context.GetItems(url);            
             
-           return JsonConvert.DeserializeObject<RootObject[]>(response);
+           return JsonConvert.DeserializeObject<RootObject>(response);
         }
     }
 }

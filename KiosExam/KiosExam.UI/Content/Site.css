@@ -1,12 +1,14 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    font-family: Changa;
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 25px;
+    padding-right: 25px;
+    font-family: Changa;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -21,4 +23,167 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.footer {
+    background: #34363C;
+    width: 100%;
+    height: 162px;
+    font-family: Changa;
+    font-size: 14px;
+    color: #A5A8BB;
+    letter-spacing: 0;
+    margin-bottom: 0 !important;
+}
+
+.vertical-menu {
+    width: 150px;
+}
+
+    .vertical-menu a {
+        background-color: transparent;
+        color: #A5A8BB;
+        display: block;
+        padding: 14px;
+    }
+
+
+
+        .vertical-menu a.active {
+            font-weight: bold;
+            color: white;
+        }
+
+.product-frame {
+    background: #FFFFFF;
+    width: 220px;
+    height: 520px;
+    border: 1px solid #EDEEF4;
+    padding-bottom: 150px;
+}
+
+.btn-more {
+    background: #34363C;
+    width: 120px;
+    height: 35px;
+    border-radius: 2px;
+    color: #FFFFFF;
+}
+
+.detail-tap {
+    background: #FFFFFF;
+    width: 400px;
+    height: 50px;
+    border: 1px solid #EDEEF4;
+}
+
+.btn {
+    font-family: Changa;
+}
+
+.btn-blue-button {
+    background: #1677CB;
+    width: 130px;
+    height: 40px;
+    border-radius: 2px;
+    border-color: #1677CB;
+    color: white;
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+.btn-white-button {
+    background-color: #FFFFFF;
+    width: 130px;
+    height: 40px;
+    border-radius: 2px;
+    border-color: #FFFFFF;
+    color: #1677CA;
+}
+
+.btn-large-button {
+    background-color: #34353B;
+    border: none;
+    width: 400px;
+    height: 50px;
+    border-radius: 2px;
+    color: #FFFFFF;
+}
+
+.navbar-inner-content {
+    min-height: 40px;
+    padding-right: 20px;
+    padding-left: 20px;
+    background-color: #FFFFFF;
+    border: 1px solid #EDEEF4;
+    font-family: Changa;
+}
+
+    .navbar-inner-content:before,
+    .navbar-inner-content:after {
+        display: table;
+        line-height: 0;
+        content: "";
+    }
+
+    .navbar-inner-content:after {
+        clear: both;
+    }
+
+.navbar .brand-inner {
+    display: block;
+    float: left;
+    padding: 8px 20px 10px;
+    margin-left: -20px;
+    font-size: 20px;
+    font-weight: 200;
+    color: #484743;
+}
+
+.vertical-line {
+    border-left: 3px solid #E6E6E6 !important;
+    height: 150px;
+    position: inherit;
+    margin-left: -3px;
+}
+
+.shopicons .fa:hover {
+    color: white;
+    opacity: 0.8;
+}
+
+.shopicons .fa {
+    padding: 15px;
+    font-size: 18px;
+    width: 14px;
+    height: 14px;
+    border-radius: 5%;
+    text-decoration: none;
+    text-align: center;
+    /*margin: 5px 2px;*/
+}
+
+.shopicons .fa-facebook {
+    background: #444959;
+    color: #A7AABD;
+}
+
+.shopicons .fa-twitter {
+    background: #444959;
+    color: #A7AABD;
+}
+
+.shopicons .fa-instagram {
+    background: #FFFFFF;
+    color: #34363C;
+}
+
+.shopicons .fa-pinterest {
+    background: #444959;
+    color: #A7AABD;
+}
+
+.inner-addon {
+    position: relative;
 }
