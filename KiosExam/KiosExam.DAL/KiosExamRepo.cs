@@ -1,8 +1,11 @@
 ﻿using KiosExam.DAL.Interface;
+using KiosExam.DAL.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,14 +15,25 @@ namespace KiosExam.DAL
     {
         private readonly HttpClient _client;
 
-        public KiosExamRepo(HttpClient client)
+        public KiosExamRepo()
         {
-            _client = client;
+            var apiUrl = "https://api.stackexchange.com/2.2/questions?page=1&pagesize=50&order=desc&sort=creation&tagged=asp.net&site=stackoverflow";
+
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+            _client = new HttpClient(handler)
+            {               
+                BaseAddress = new Uri(apiUrl)
+            };
+            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));          
+           
         }
 
-        public async Task<string> GetItems(string url)
+        public string  GetItems(string url)
         {
-            return await _client.GetStringAsync(url);
+            var response =  _client.GetStringAsync(url).Result;
+
+            return response;
         }
     }
 }
