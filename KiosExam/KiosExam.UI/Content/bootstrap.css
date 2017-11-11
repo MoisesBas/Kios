@@ -4110,15 +4110,15 @@ input[type="submit"].btn {
     margin-bottom: 20px;
     overflow: visible;
     color: white;
-    background: #34363C;
+    background: #FAFAFB;
 }
 
 .navbar-inner {
     min-height: 40px;
     padding-right: 20px;
     padding-left: 20px;
-    background-color: #006dcc;
-    *background-color: #0044cc;
+    background-color: #FAFAFB;
+    *background-color: #FAFAFB;
 }
 
     .navbar-inner:before,

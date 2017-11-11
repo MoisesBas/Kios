@@ -19,9 +19,8 @@ namespace KiosExam.DAL.Model
         public int question_id { get; set; }
         public string link { get; set; }
         public string title { get; set; }
-        public int? last_edit_date { get; set; }
-        public int? accepted_answer_id { get; set; }
-        public int? closed_date { get; set; }
-        public string closed_reason { get; set; }
+        public string body { get; set; }
+        public string body_markdown { get; set; }
+        public int? last_edit_date { get; set; }       
     }
 }

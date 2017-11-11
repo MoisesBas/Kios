@@ -3,10 +3,162 @@
 }
 
 <div class="row-fluid">
-    <div class="span12">      
-        <div class="scrollable maximizedown">
+    <div class="span2">
 
+    </div>
+    <div class="span8">
+        <div class="maximizedown">
+            <table class="table table-form table-condensed font12 kiosexam">
+                <tbody>
+                    <!--ko foreach:VM.KiosExam.items()-->
+                    <tr>
+                        <td class="statscontainer">
+                            <table class="table table-clear table-form font12">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="stats">
+                                                <div class="vote">
+                                                    <div class="votes">
+                                                        <span class="vote-count-post">
+                                                            <strong>
+                                                                1
+                                                            </strong>
+                                                        </span>
+                                                    </div>
+                                                    <div class="status unanswered">
+                                                        <strong data-bind="text:answer_count">
+                                                        </strong> answers
+                                                       
+                                                    </div>
+
+                                                </div>
+                                                
+
+                                            </div>
+                                            <div class="views">
+                                                <span data-bind="text:view_count + ' views'"></span>
+                                            </div>
+                                        </td>
+                                    </tr>                                    
+                                </tbody>
+                            </table>
+                        </td>
+                        <td class="summary">
+                            <table class="table table-clear table-form font12">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <a data-bind="text:title, click: VM.KiosExam.show" style="font-size:16px!important"></a>
+                                            <div class="excerpt">
+                                                <span data-bind="text:body_markdown.length > 150 ? body_markdown.substr(0, body_markdown.lastIndexOf(' ', 150)) + '...' : body_markdown"></span>
+                                            </div>
+                                            <div class="tags" data-bind="text:tags">
+                                            </div>
+                                            <div class="started">
+                                                <div class="user-info">
+                                                    <div class="user-action-time">
+
+                                                    </div>
+                                                    <div class="user-gravatar32">
+                                                        <a href="#">
+                                                            <img data-bind="attr:{ src: owner.profile_image }" />
+                                                        </a>
+                                                    </div>
+                                                    <div class="user-details">
+                                                        <a href="#" data-bind="text: owner.display_name"></a>
+                                                        <div class="-flair">
+                                                            <span data-bind="text:owner.reputation"></span>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </td>
+                    </tr>
+                    <!--/ko-->
+                </tbody>
+            </table>
         </div>
     </div>
-    
+    <div class="span2">
+
+    </div>
+    <div id="currentItem_modal" class="modal hide fade">
+        <div class="modal-header"><h4 data-bind="text: VM.invitems.KiosExam.current().title"></h4></div>
+        <div class="modal-body">
+        </div>
+        </div>
 </div>
+<script>
+    $(document).ready(function () {
+        ko.applyBindings(VM);
+        VM.KiosExam.load();
+       
+
+    });
+    var VM = {};
+</script>
+<script>
+    VM.KiosExam = {
+        isloading: ko.observable(false),
+        items: ko.observableArray([]),
+        item: {
+            init: {},
+            current: ko.observable({
+                tags: ko.observableArray([]),
+                owner: ko.observable(''),
+                is_answered: false,
+                view_count: 0,
+                answer_count: 0,
+                score: 0,
+                last_activity_date: 0,
+                creation_date: 0,
+                question_id: 0,
+                link: '',
+                title: '',
+                body: '',
+                body_markdown: '',
+                last_edit_date: null
+            })
+        }, load: function (step) {
+            VM.KiosExam.items.removeAll();
+            if (VM.KiosExam.isloading())
+                return;
+            VM.KiosExam.isloading(true);
+            models_ajax("@Url.Content("~/home/getItems")",
+                function (data) {
+                    switch (data.status) {
+                        case "OK":
+                            VM.KiosExam.isloading(false);
+                            if (data.data != null) {
+                                VM.KiosExam.items(data.data);
+                            }
+
+                            break;
+                        case "ERROR":
+                            VM.invoice.isloading(false);
+                            models_notify("ERROR", data.message);
+                            break;
+                    }
+                }
+            )
+        },
+        show: function (item) {
+
+            if (!item) {
+                VM.KiosExam.item.current(models_clone(VM.KiosExam.item.init))
+            } else {
+                VM.KiosExam.item.current($.extend({}, VM.KiosExam.item.init, item));
+            }
+            $("#currentItem_modal").modal({ show: true, width: 500 });
+        },
+
+    }
+</script>
