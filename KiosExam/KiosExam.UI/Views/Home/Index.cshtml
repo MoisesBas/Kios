@@ -91,8 +91,25 @@
 
     </div>
     <div id="currentItem_modal" class="modal hide fade">
-        <div class="modal-header"><h4 data-bind="text: VM.invitems.KiosExam.current().title"></h4></div>
+        <div class="modal-header"><h4></h4></div>
         <div class="modal-body">
+            <div class="question">
+                <table class="table table-condensed table-clear" style="margin-bottom:0px!important" data-bind="with: VM.KiosExam.item.current">
+                    <tbody>
+                        <tr>
+                            <td class="votecell">
+
+                            </td>
+                            <td class="postcell">
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">           
+            <a class="btn btn-gray" data-dismiss="modal">Close</a>            
         </div>
         </div>
 </div>

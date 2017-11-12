@@ -295,4 +295,13 @@ textarea {
     padding-top: 4px;
     text-align: center;
 }
-
+.votecell {
+    vertical-align: top;
+    padding-right: 15px;
+}
+.question .postcell {
+    vertical-align: top;
+}
+.question {
+    clear: both;
+}
