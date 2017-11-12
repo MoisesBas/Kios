@@ -29,18 +29,18 @@
                                                     <div class="status unanswered">
                                                         <strong data-bind="text:answer_count">
                                                         </strong> answers
-                                                       
+
                                                     </div>
 
                                                 </div>
-                                                
+
 
                                             </div>
                                             <div class="views">
                                                 <span data-bind="text:view_count + ' views'"></span>
                                             </div>
                                         </td>
-                                    </tr>                                    
+                                    </tr>
                                 </tbody>
                             </table>
                         </td>
@@ -91,33 +91,35 @@
 
     </div>
     <div id="currentItem_modal" class="modal hide fade">
-        <div class="modal-header"><h4></h4></div>
-        <div class="modal-body">
-            <div class="question">
-                <table class="table table-condensed table-clear" style="margin-bottom:0px!important" data-bind="with: VM.KiosExam.item.current">
-                    <tbody>
-                        <tr>
-                            <td class="votecell">
+        <div class="modal-header"><h4 data-bind="text:'Q: ' + VM.KiosExam.item.current().title"></h4></div>
+        <div class="modal-body">           
+                <div class="scrollable">
+                    <table class="table table-condensed table-clear question" style="margin-bottom:0px!important" data-bind="with: VM.KiosExam.item.current">
+                        <tbody>
+                            <tr>
+                                <td class="postcell">
+                                    <div>
+                                        <div class="post-text">
+                                            <pre data-bind="text:body_markdown"></pre>
 
-                            </td>
-                            <td class="postcell">
-
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+        <div class="modal-footer">
+            <a class="btn btn-gray" data-dismiss="modal">Close</a>
         </div>
-        <div class="modal-footer">           
-            <a class="btn btn-gray" data-dismiss="modal">Close</a>            
-        </div>
-        </div>
+    </div>
 </div>
 <script>
     $(document).ready(function () {
         ko.applyBindings(VM);
-        VM.KiosExam.load();
-       
+        VM.KiosExam.load();     
+
 
     });
     var VM = {};
@@ -174,7 +176,7 @@
             } else {
                 VM.KiosExam.item.current($.extend({}, VM.KiosExam.item.init, item));
             }
-            $("#currentItem_modal").modal({ show: true, width: 500 });
+            $("#currentItem_modal").modal({ show: true, width: 600 });
         },
 
     }

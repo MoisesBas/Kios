@@ -1,4 +1,4 @@
-﻿// moment.js
+// moment.js
 // version : 2.0.0
 // author : Tim Wood
 // license : MIT
@@ -637,7 +637,7 @@
                     config._isValid = false;
                 }
                 break;
-            // DAY OF MONTH
+                // DAY OF MONTH
             case 'D': // fall through to DDDD
             case 'DD': // fall through to DDDD
             case 'DDD': // fall through to DDDD
@@ -646,7 +646,7 @@
                     datePartArray[2] = ~~input;
                 }
                 break;
-            // YEAR
+                // YEAR
             case 'YY':
                 datePartArray[0] = ~~input + (~~input > 68 ? 1900 : 2000);
                 break;
@@ -654,39 +654,39 @@
             case 'YYYYY':
                 datePartArray[0] = ~~input;
                 break;
-            // AM / PM
+                // AM / PM
             case 'a': // fall through to A
             case 'A':
                 config._isPm = ((input + '').toLowerCase() === 'pm');
                 break;
-            // 24 HOUR
+                // 24 HOUR
             case 'H': // fall through to hh
             case 'HH': // fall through to hh
             case 'h': // fall through to hh
             case 'hh':
                 datePartArray[3] = ~~input;
                 break;
-            // MINUTE
+                // MINUTE
             case 'm': // fall through to mm
             case 'mm':
                 datePartArray[4] = ~~input;
                 break;
-            // SECOND
+                // SECOND
             case 's': // fall through to ss
             case 'ss':
                 datePartArray[5] = ~~input;
                 break;
-            // MILLISECOND
+                // MILLISECOND
             case 'S':
             case 'SS':
             case 'SSS':
                 datePartArray[6] = ~~(('0.' + input) * 1000);
                 break;
-            // UNIX TIMESTAMP WITH MS
+                // UNIX TIMESTAMP WITH MS
             case 'X':
                 config._d = new Date(parseFloat(input) * 1000);
                 break;
-            // TIMEZONE
+                // TIMEZONE
             case 'Z': // fall through to ZZ
             case 'ZZ':
                 config._useUTC = true;
@@ -1147,10 +1147,10 @@
                 diff = (this - that) - zoneDiff;
                 output = units === 'second' ? diff / 1e3 : // 1000
                     units === 'minute' ? diff / 6e4 : // 1000 * 60
-                        units === 'hour' ? diff / 36e5 : // 1000 * 60 * 60
-                            units === 'day' ? diff / 864e5 : // 1000 * 60 * 60 * 24
-                                units === 'week' ? diff / 6048e5 : // 1000 * 60 * 60 * 24 * 7
-                                    diff;
+                    units === 'hour' ? diff / 36e5 : // 1000 * 60 * 60
+                    units === 'day' ? diff / 864e5 : // 1000 * 60 * 60 * 24
+                    units === 'week' ? diff / 6048e5 : // 1000 * 60 * 60 * 24 * 7
+                    diff;
             }
             return asFloat ? output : absRound(output);
         },
@@ -1166,11 +1166,11 @@
         calendar: function () {
             var diff = this.diff(moment().startOf('day'), 'days', true),
                 format = diff < -6 ? 'sameElse' :
-                    diff < -1 ? 'lastWeek' :
-                        diff < 0 ? 'lastDay' :
-                            diff < 1 ? 'sameDay' :
-                                diff < 2 ? 'nextDay' :
-                                    diff < 7 ? 'nextWeek' : 'sameElse';
+                diff < -1 ? 'lastWeek' :
+                diff < 0 ? 'lastDay' :
+                diff < 1 ? 'sameDay' :
+                diff < 2 ? 'nextDay' :
+                diff < 7 ? 'nextWeek' : 'sameElse';
             return this.format(this.lang().calendar(format, this));
         },
 
@@ -1197,23 +1197,23 @@
             switch (units) {
                 case 'year':
                     this.month(0);
-                /* falls through */
+                    /* falls through */
                 case 'month':
                     this.date(1);
-                /* falls through */
+                    /* falls through */
                 case 'week':
                 case 'day':
                     this.hours(0);
-                /* falls through */
+                    /* falls through */
                 case 'hour':
                     this.minutes(0);
-                /* falls through */
+                    /* falls through */
                 case 'minute':
                     this.seconds(0);
-                /* falls through */
+                    /* falls through */
                 case 'second':
                     this.milliseconds(0);
-                /* falls through */
+                    /* falls through */
             }
 
             // weeks are a special case
@@ -1317,8 +1317,8 @@
 
         valueOf: function () {
             return this._milliseconds +
-                this._days * 864e5 +
-                this._months * 2592e6;
+              this._days * 864e5 +
+              this._months * 2592e6;
         },
 
         humanize: function (withSuffix) {
@@ -1367,9 +1367,9 @@
         ordinal: function (number) {
             var b = number % 10,
                 output = (~~(number % 100 / 10) === 1) ? 'th' :
-                    (b === 1) ? 'st' :
-                        (b === 2) ? 'nd' :
-                            (b === 3) ? 'rd' : 'th';
+                (b === 1) ? 'st' :
+                (b === 2) ? 'nd' :
+                (b === 3) ? 'rd' : 'th';
             return number + output;
         }
     });
