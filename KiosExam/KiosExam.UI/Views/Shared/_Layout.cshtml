@@ -21,20 +21,45 @@
     <script src="~/Scripts/moment.js"></script>
     <script src="~/Scripts/chosen.jquery.js"></script>
     <script src="~/Scripts/Models.js"></script>
-    <script src="~/Scripts/jquery.floatThead.js"></script>
+    <script src="~/Scripts/jquery.floatThead.js"></script>  
 </head>
 <body>
+    <div id="LOD_modal" class="modal">
+        <div class="modal-body">
+            <h4>Please wait...</h4>
+            <div style="width: 40%; margin: 0 auto;" class="progress progress-striped active">
+                <div style="width:100%" id="BAR" class="bar"></div>
+            </div>
+            <div class="alert alert-danger hide" id="lbldesc"></div>
+        </div>
+    </div>
+    <script>
+        $("#LOD_modal").modal({ show: true, backdrop: 'static' });
+    </script>
+
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="row-fluid" style="height:48px;">
                 <div class="span12">
-
+                    <div class="pull-right">
+                        <table class="table table-condensed3 table-form font12">
+                            <tr>
+                                <td>
+                                    <input id="txtsearch" type="text" class="input-large" placeholder="Search" />
+                                </td>
+                                <td>
+                                    <a onclick="VM.KiosExam.load()" class="btn btn-primary">Search</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    
                 </div>
             </div>
             
         </div>
     </div>
-
+  
     <div class="container-fluid" style="padding-top:60px!important;">
 
 
@@ -51,6 +76,8 @@
             </div>
         </div>
     </div>
+
+    
 
 
     @*@Scripts.Render("~/bundles/jquery")

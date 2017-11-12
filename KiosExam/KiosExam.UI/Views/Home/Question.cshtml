@@ -1,6 +1,9 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿
+@{
+    ViewBag.Title = "Question";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 
 <div class="row-fluid">
     <div class="span2">
@@ -10,7 +13,7 @@
         <div class="maximizedown">
             <table class="table table-form table-condensed font12 kiosexam">
                 <tbody>
-                    <!--ko foreach:VM.KiosExam.items()-->
+                 
                     <tr>
                         <td class="statscontainer">
                             <table class="table table-clear table-form font12">
@@ -27,7 +30,7 @@
                                                         </span>
                                                     </div>
                                                     <div class="status unanswered">
-                                                        <strong data-bind="text:answer_count">
+                                                        <strong>
                                                         </strong> answers
 
                                                     </div>
@@ -37,7 +40,7 @@
 
                                             </div>
                                             <div class="views">
-                                                <span data-bind="text:view_count + ' views'"></span>
+                                                <span></span>
                                             </div>
                                         </td>
                                     </tr>
@@ -49,11 +52,11 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                           <b><a data-bind="text:title, attr: { 'href' : '@Url.Content("~/home/question?id=")' + question_id }" href="#" target="_self"></a></b>
+                                            <b><a href="#" target="_self"></a></b>
                                             <div class="excerpt">
-                                                <span data-bind="text:body_markdown.length > 150 ? body_markdown.substr(0, body_markdown.lastIndexOf(' ', 150)) + '...' : body_markdown"></span>
+                                                <span></span>
                                             </div>
-                                            <div class="tags" data-bind="text:tags">
+                                            <div class="tags">
                                             </div>
                                             <div class="started">
                                                 <div class="user-info">
@@ -62,13 +65,13 @@
                                                     </div>
                                                     <div class="user-gravatar32">
                                                         <a href="#">
-                                                            <img data-bind="attr:{ src: owner.profile_image }" />
+                                                            <img  />
                                                         </a>
                                                     </div>
                                                     <div class="user-details">
-                                                        <a href="#" data-bind="text: owner.display_name"></a>
+                                                        <a href="#"></a>
                                                         <div class="-flair">
-                                                            <span data-bind="text:owner.reputation"></span>
+                                                            <span></span>
                                                         </div>
 
                                                     </div>
@@ -82,46 +85,19 @@
 
                         </td>
                     </tr>
-                    <!--/ko-->
+                  
                 </tbody>
             </table>
-        </div>
-        <div class="input-append input-prepend" style="text-align:center;padding-right:300px;">
-            <ul id="pagination" class="pagination-sm"></ul>            
         </div>
     </div>
     <div class="span2">
     </div>
-    <div id="currentItem_modal" class="modal hide fade">
-        <div class="modal-header"><h4 data-bind="text: VM.KiosExam.item.current().title"></h4></div>
-        <div class="modal-body">           
-                <div class="scrollable">
-                    <table class="table table-condensed table-clear question" style="margin-bottom:0px!important" data-bind="with: VM.KiosExam.item.current">
-                        <tbody>
-                            <tr>
-                                <td class="postcell">
-                                    <div>
-                                        <div class="post-text">
-                                            <pre data-bind="text:body_markdown"></pre>
-
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        <div class="modal-footer">
-            <a class="btn btn-gray" data-dismiss="modal">Close</a>
-        </div>
     </div>
-</div>
 <script>
     $(document).ready(function () {
         ko.applyBindings(VM);
-        VM.KiosExam.item.init = models_clone(VM.KiosExam.item.current());
-        VM.KiosExam.load();
+        VM.Question.item.init = models_clone(VM.Question.item.current());
+        VM.Question.load();
 
         VM.KiosExam.isloading.subscribe(function (newval) {
             if (newval)
@@ -133,8 +109,9 @@
     });
     var VM = {};
 </script>
+
 <script>
-    VM.KiosExam = {
+    VM.Question = {
         isloading: ko.observable(false),
         items: ko.observableArray([]),
         item: {
@@ -156,37 +133,28 @@
                 last_edit_date: null
             })
         }, load: function (step) {
-            VM.KiosExam.items.removeAll();
-            if (VM.KiosExam.isloading())
+            VM.Question.items.removeAll();
+            if (VM.Question.isloading())
                 return;
-            VM.KiosExam.isloading(true);          
-           
-            models_ajax("@Url.Content("~/home/getItems")",
+            VM.Question.isloading(true);
+            models_ajax("@Url.Content("~/home/getItem")",
                 function (data) {
                     switch (data.status) {
                         case "OK":
-                            VM.KiosExam.isloading(false);
-                            var pageshow = "";
+                            VM.Question.isloading(false);
                             if (data.data != null) {
-                                VM.KiosExam.items(data.data);
-                                
-                            }                           
-                           
-
+                                VM.Question.items(data.data);
+                            }
                             break;
                         case "ERROR":
-                            VM.KiosExam.isloading(false);
+                            VM.Question.isloading(false);
                             models_notify("ERROR", data.message);
                             break;
                     }
-                }, {
-                    search: $('#txtsearch').val(),
-                    page: 1
-                    //page: page == '' ? 1 : page + step,
                 }
-
             )
-        }        
+        }
 
     }
 </script>
+

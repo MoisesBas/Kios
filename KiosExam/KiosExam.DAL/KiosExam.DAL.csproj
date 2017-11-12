@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,9 +43,14 @@
   <ItemGroup>
     <Compile Include="KiosExamRepo.cs" />
     <Compile Include="Interface\IKiosExamRepo.cs" />
+    <Compile Include="Model\Comment.cs" />
     <Compile Include="Model\Item.cs" />
+    <Compile Include="Model\Item2.cs" />
     <Compile Include="Model\Owner.cs" />
+    <Compile Include="Model\Owner2.cs" />
+    <Compile Include="Model\ReplyToUser.cs" />
     <Compile Include="Model\RootObject.cs" />
+    <Compile Include="Model\RootObject2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

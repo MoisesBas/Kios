@@ -10,5 +10,6 @@ namespace KiosExam.BLL
     public interface IKiosExam
     {
         RootObject GetItems(string url);
+        RootObject2 GetAnswer(string url);
     }
 }

@@ -2,6 +2,7 @@
 using KiosExam.DAL.Model;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -14,16 +15,15 @@ namespace KiosExam.DAL
     public class KiosExamRepo : IKiosExamRepo
     {
         private readonly HttpClient _client;
-
+        private string rootUrl = ConfigurationManager.AppSettings["KiosRoot"];
         public KiosExamRepo()
-        {
-            var apiUrl = "https://api.stackexchange.com/2.2/questions?page=1&pagesize=50&order=desc&sort=creation&tagged=asp.net&site=stackoverflow";
+        {          
 
             HttpClientHandler handler = new HttpClientHandler();
             handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             _client = new HttpClient(handler)
             {               
-                BaseAddress = new Uri(apiUrl)
+                BaseAddress = new Uri(rootUrl)
             };
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));          
            

@@ -22,9 +22,17 @@ namespace KiosExam.BLL
 
         public RootObject GetItems(string url)
         {
-            var response = _context.GetItems(url);            
-            
-           return JsonConvert.DeserializeObject<RootObject>(response);
+            var response = _context.GetItems(url);
+            return JsonConvert.DeserializeObject<RootObject>(response);
+
+
+        }
+        public RootObject2 GetAnswer(string url)
+        {
+            var response = _context.GetItems(url);
+            return JsonConvert.DeserializeObject<RootObject2>(response);
+
+
         }
     }
 }
