@@ -27,10 +27,10 @@ namespace KiosExam.BLL
 
 
         }
-        public RootObject2 GetAnswer(string url)
+        public Answer GetAnswer(string url)
         {
             var response = _context.GetItems(url);
-            return JsonConvert.DeserializeObject<RootObject2>(response);
+            return JsonConvert.DeserializeObject<Answer>(response);
 
 
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KiosExam.DAL.Model
 {
-    public class Item2
+    public class Answers
     {
         public List<Comment> comments { get; set; }
         public Owner2 owner { get; set; }

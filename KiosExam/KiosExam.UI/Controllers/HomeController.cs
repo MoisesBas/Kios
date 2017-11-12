@@ -53,15 +53,15 @@ namespace KiosExam.UI.Controllers
             int totalpages = 1, pagesize = 50, recordcount = 0;
             Array data = null,arrdata1 = null;
             var result = new RootObject();
-            var result2 = new RootObject2();
+            var result2 = new Answer();
             var url = string.Empty;
             try
             {
                 if (id != 0) {
                     result = _exam.GetItems(string.Format("questions/{0}?order=desc&sort=activity&site=stackoverflow&filter=!-*f(6rc.bgwz",id));
                     data = result.items.ToArray();
-                    result2 = _exam.GetItems(string.Format("questions/{0}/answers?page=1&pagesize=50&order=desc&sort=creation&site=stackoverflow&filter=!b0OfNR*gZdUEwX",id));
-
+                    result2 = _exam.GetAnswer(string.Format("questions/{0}/answers?page=1&pagesize=50&order=desc&sort=creation&site=stackoverflow&filter=!b0OfNR*gZdUEwX",id));
+                    arrdata1 = result2.items.ToArray();
 
                 }
 
@@ -80,7 +80,8 @@ namespace KiosExam.UI.Controllers
                 page,
                 status = responseStatus,
                 message = responseText,
-                data = data
+                data,
+                arrdata1
             });
         }
 

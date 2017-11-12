@@ -20,28 +20,7 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <div class="stats">
-                                                <div class="vote">
-                                                    <div class="votes">
-                                                        <span class="vote-count-post">
-                                                            <strong>
-                                                                1
-                                                            </strong>
-                                                        </span>
-                                                    </div>
-                                                    <div class="status unanswered">
-                                                        <strong>
-                                                        </strong> answers
-
-                                                    </div>
-
-                                                </div>
-
-
-                                            </div>
-                                            <div class="views">
-                                                <span></span>
-                                            </div>
+                                            
                                         </td>
                                     </tr>
                                 </tbody>
@@ -50,11 +29,12 @@
                         <td class="summary">
                             <table class="table table-clear table-form font12">
                                 <tbody>
+                                    <!--ko foreach:VM.Question.items()-->
                                     <tr>
                                         <td>
-                                            <b><a href="#" target="_self"></a></b>
+                                            <b data-bind="text:title"></b>
                                             <div class="excerpt">
-                                                <span></span>
+                                                <span data-bind="text:body"></span>
                                             </div>
                                             <div class="tags">
                                             </div>
@@ -80,6 +60,8 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    <!--/ko-->
+                                    
                                 </tbody>
                             </table>
 
@@ -97,9 +79,14 @@
     $(document).ready(function () {
         ko.applyBindings(VM);
         VM.Question.item.init = models_clone(VM.Question.item.current());
-        VM.Question.load();
+        VM.Answer.item.init = models_clone(VM.Answer.item.current());
 
-        VM.KiosExam.isloading.subscribe(function (newval) {
+        var txtid= models_getURLParameter('id');
+        if (txtid != 'null') {
+            VM.Question.load(txtid);
+        }     
+
+        VM.Question.isloading.subscribe(function (newval) {
             if (newval)
                 $("#LOD_modal").modal({ show: true, keyboard: false, backdrop: 'static' });
             else
@@ -145,12 +132,17 @@
                             if (data.data != null) {
                                 VM.Question.items(data.data);
                             }
+                            if (data.arrdata1 != null) {
+                                VM.Answer.items(data.data);
+                            }
                             break;
                         case "ERROR":
                             VM.Question.isloading(false);
                             models_notify("ERROR", data.message);
                             break;
                     }
+                }, {
+                    id: step                   
                 }
             )
         }
@@ -158,3 +150,24 @@
     }
 </script>
 
+<script>
+    VM.Answer = {
+        isloading: ko.observable(false),
+        items: ko.observableArray([]),
+        item: {
+            init: {},
+            current: ko.observable({
+                comments : ko.observableArray([]),
+                owner: ko.observable(''),
+                is_accepted : false,
+                score : 0,
+                last_activity_date : 0,
+                creation_date : 0,               
+                answer_id : 0,
+                question_id : 0,
+                title : '',
+                body : ''                
+            })
+        }
+    }
+</script>
