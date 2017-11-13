@@ -9,7 +9,8 @@ namespace KiosExam.BLL
 {
     public interface IKiosExam
     {
-        RootObject GetItems(string url);
-        Answer GetAnswer(string url);
+        QuestionObject GetItems(string url);
+        AnswerObject GetAnswer(string url);
+        CommentObject GetComment(string url);
     }
 }

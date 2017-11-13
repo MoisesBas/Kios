@@ -13,15 +13,13 @@
         <div class="maximizedown">
             <table class="table table-form table-condensed font12 kiosexam">
                 <tbody>
-                 
+
                     <tr>
                         <td class="statscontainer">
                             <table class="table table-clear table-form font12">
                                 <tbody>
                                     <tr>
-                                        <td>
-                                            
-                                        </td>
+                                        <td></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -34,7 +32,7 @@
                                         <td>
                                             <b data-bind="text:title"></b>
                                             <div class="excerpt">
-                                                <span data-bind="text:body"></span>
+                                                <span data-bind="html:body"></span>
                                             </div>
                                             <div class="tags">
                                             </div>
@@ -45,15 +43,14 @@
                                                     </div>
                                                     <div class="user-gravatar32">
                                                         <a href="#">
-                                                            <img  />
+                                                            <img data-bind="attr:{ src: owner.profile_image }" />
                                                         </a>
                                                     </div>
                                                     <div class="user-details">
-                                                        <a href="#"></a>
+                                                        <a href="#" data-bind="text: owner.display_name"></a>
                                                         <div class="-flair">
-                                                            <span></span>
+                                                            <span data-bind="text:owner.reputation"></span>
                                                         </div>
-
                                                     </div>
                                                 </div>
 
@@ -61,30 +58,111 @@
                                         </td>
                                     </tr>
                                     <!--/ko-->
-                                    
+                                    <!--ko foreach:VM.Comment.items()-->
+                                    <tr>
+                                        <td class="comment">
+                                            <div class="comments">
+                                                <span data-bind="html:body">
+                                                </span> - <a href="#" data-bind="text:owner.display_name"></a>
+                                            </div>
+
+
+                                        </td>
+                                    </tr>
+                                    <!--/ko-->
+
                                 </tbody>
                             </table>
 
                         </td>
                     </tr>
-                  
+                    <!--ko foreach:VM.Question.items()-->
+                    <!--ko if:answer_count > 0-->
+                    <tr>
+                        <td colspan="2" class="subheader">                           
+                            <b><span style="font-size:16px;" data-bind="text:answer_count + '  Answer'"></span></b>
+                        </td>
+                    </tr>
+                    <!--/ko-->
+                    <!--/ko-->
+
+                   
+                </tbody>
+            </table>
+            <table class="table table-form table-condensed font12 kiosexam">
+                <tbody>
+
+                    <tr>
+                        <td class="statscontainer">
+                            <table class="table table-clear table-form font12">
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td class="summary">
+                            <table class="table table-clear table-form font12">
+                                <tbody>
+                                    <!--ko foreach:VM.Answer.items()-->
+                                    <tr>
+                                        <td>
+                                            <b data-bind="text:title"></b>
+                                            <div class="excerpt">
+                                                <span data-bind="html:body"></span>
+                                            </div>
+                                            <div class="tags">
+                                            </div>
+                                            <div class="started">
+                                                <div class="user-info">
+                                                    <div class="user-action-time">
+
+                                                    </div>
+                                                    <div class="user-gravatar32">
+                                                        <a href="#">
+                                                            <img data-bind="attr:{ src: owner.profile_image }" />
+                                                        </a>
+                                                    </div>
+                                                    <div class="user-details">
+                                                        <a href="#" data-bind="text: owner.display_name"></a>
+                                                        <div class="-flair">
+                                                            <span data-bind="text:owner.reputation"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!--/ko-->                                  
+
+                                </tbody>
+                            </table>
+
+                        </td>
+                    </tr>                 
+                   
                 </tbody>
             </table>
         </div>
     </div>
     <div class="span2">
     </div>
-    </div>
+</div>
 <script>
     $(document).ready(function () {
         ko.applyBindings(VM);
         VM.Question.item.init = models_clone(VM.Question.item.current());
         VM.Answer.item.init = models_clone(VM.Answer.item.current());
+        VM.Comment.item.init = models_clone(VM.Comment.item.current());
 
-        var txtid= models_getURLParameter('id');
+        var txtid = models_getURLParameter('id');
         if (txtid != 'null') {
             VM.Question.load(txtid);
-        }     
+            VM.Answer.load(txtid);
+            VM.Comment.load(txtid);
+        }
 
         VM.Question.isloading.subscribe(function (newval) {
             if (newval)
@@ -130,11 +208,10 @@
                         case "OK":
                             VM.Question.isloading(false);
                             if (data.data != null) {
+                                debugger;
                                 VM.Question.items(data.data);
                             }
-                            if (data.arrdata1 != null) {
-                                VM.Answer.items(data.data);
-                            }
+                            $("#LOD_modal").modal('hide');
                             break;
                         case "ERROR":
                             VM.Question.isloading(false);
@@ -142,7 +219,7 @@
                             break;
                     }
                 }, {
-                    id: step                   
+                    id: step
                 }
             )
         }
@@ -162,12 +239,83 @@
                 is_accepted : false,
                 score : 0,
                 last_activity_date : 0,
-                creation_date : 0,               
+                creation_date : 0,
                 answer_id : 0,
                 question_id : 0,
                 title : '',
-                body : ''                
+                body : ''
             })
+        },
+         load: function (step) {
+             VM.Answer.items.removeAll();
+             if (VM.Answer.isloading())
+                return;
+             VM.Answer.isloading(true);
+            models_ajax("@Url.Content("~/home/getAnswer")",
+                function (data) {
+                    switch (data.status) {
+                        case "OK":
+                            VM.Answer.isloading(false);
+                            if (data.data != null) {
+                                VM.Answer.items(data.data);
+                            }
+                            $("#LOD_modal").modal('hide');
+                            break;
+                        case "ERROR":
+                            VM.Answer.isloading(false);
+                            models_notify("ERROR", data.message);
+                            break;
+                    }
+                }, {
+                    id: step
+                }
+            )
         }
+    }
+</script>
+
+
+<script>
+    VM.Comment = {
+        isloading: ko.observable(false),
+        items: ko.observableArray([]),
+        item: {
+            init: {},
+            current: ko.observable({
+                owner: ko.observable(''),
+                edited : false,
+                score: 0,
+                creation_date: 0,
+                post_id : 0,
+                comment_id : 0,
+                title: '',
+                body: ''
+            })
+        }, load: function (step) {
+            VM.Comment.items.removeAll();
+            if (VM.Comment.isloading())
+                return;
+            VM.Comment.isloading(true);
+            models_ajax("@Url.Content("~/home/getComment")",
+                function (data) {
+                    switch (data.status) {
+                        case "OK":
+                            VM.Comment.isloading(false);
+                            if (data.data != null) {
+                                VM.Comment.items(data.data);
+                            }
+                            $("#LOD_modal").modal('hide');
+                            break;
+                        case "ERROR":
+                            VM.Comment.isloading(false);
+                            models_notify("ERROR", data.message);
+                            break;
+                    }
+                }, {
+                    id: step
+                }
+            )
+        }
+
     }
 </script>

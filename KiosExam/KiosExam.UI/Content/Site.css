@@ -337,3 +337,31 @@ textarea {
     font-size: 15px;
     line-height: 1.3;
 }
+
+.comments {
+    width: 660px;
+    margin-top: 2px;
+    padding-bottom: 2px;
+    border-top: 1px solid #e4e6e8;
+}
+.comment {
+    padding: 6px 6px 6px 0;
+    vertical-align: top;
+    line-height: 1.3;
+    border-bottom: 1px solid #eff0f1;
+}
+.comment-text {
+    font-size: 13px;
+    line-height: 1.3;
+}
+
+.comment-text, .comment-form {
+    padding: 0 6px 0 7px;
+    vertical-align: text-top;
+}
+.subheader {
+    clear: both;
+    margin-bottom: 10px;
+    height: 40px;
+    border-bottom: 1px solid #e4e6e8;
+}

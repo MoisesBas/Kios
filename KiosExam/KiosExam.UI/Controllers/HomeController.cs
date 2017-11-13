@@ -48,23 +48,79 @@ namespace KiosExam.UI.Controllers
 
         }
 
+        public ActionResult getAnswer(int id)
+        {
+            Array data = null;            
+            var answer = new AnswerObject();          
+            var url = string.Empty;
+            try
+            {
+                if (id != 0)
+                {
+                    
+                    answer = _exam.GetAnswer(string.Format("questions/{0}/answers?page=1&pagesize=50&order=desc&sort=creation&site=stackoverflow&filter=!b0OfNR*gZdUEwX", id));
+                    data = answer.items.ToArray();                   
+
+                }
+                responseStatus = "OK";
+            }
+            catch (Exception ex)
+            {
+                if (String.IsNullOrEmpty(ex.Message))
+                    responseStatus = "ERROR";
+                responseText = ex.Message;
+            }
+            return Json(new
+            {                 
+                status = responseStatus,
+                message = responseText,
+                data                
+            });
+        }
+
+        public ActionResult getComment(int id)
+        {            
+            Array data = null;            
+            var comment = new CommentObject();
+            var url = string.Empty;
+            try
+            {
+                if (id != 0)
+                {                    
+                    comment = _exam.GetComment(string.Format("questions/{0}/comments?order=desc&sort=creation&site=stackoverflow&filter=!9YdnSQVog", id));
+                    data = comment.items.ToArray();
+
+                }
+                responseStatus = "OK";
+            }
+            catch (Exception ex)
+            {
+                if (String.IsNullOrEmpty(ex.Message))
+                    responseStatus = "ERROR";
+                responseText = ex.Message;
+            }
+            return Json(new
+            {               
+                status = responseStatus,
+                message = responseText,
+                data                
+            });
+        }
+
         public ActionResult getitem(int id)
         {
             int totalpages = 1, pagesize = 50, recordcount = 0;
-            Array data = null,arrdata1 = null;
-            var result = new RootObject();
-            var result2 = new Answer();
+            Array data = null,arrdata1 = null,arrdata2=null;
+            var question = new QuestionObject();            
             var url = string.Empty;
             try
             {
                 if (id != 0) {
-                    result = _exam.GetItems(string.Format("questions/{0}?order=desc&sort=activity&site=stackoverflow&filter=!-*f(6rc.bgwz",id));
-                    data = result.items.ToArray();
-                    result2 = _exam.GetAnswer(string.Format("questions/{0}/answers?page=1&pagesize=50&order=desc&sort=creation&site=stackoverflow&filter=!b0OfNR*gZdUEwX",id));
-                    arrdata1 = result2.items.ToArray();
+                    question = _exam.GetItems(string.Format("questions/{0}?order=desc&sort=activity&site=stackoverflow&filter=!b0OfNINZfha_h*", id));
+                    data = question.items.ToArray();                    
 
                 }
-
+                responseStatus = "OK";
             }            
             catch (Exception ex)
             {
@@ -80,8 +136,8 @@ namespace KiosExam.UI.Controllers
                 page,
                 status = responseStatus,
                 message = responseText,
-                data,
-                arrdata1
+                data
+                
             });
         }
 
@@ -90,7 +146,7 @@ namespace KiosExam.UI.Controllers
             
             int totalpages = 1, pagesize = 50, recordcount = 0;
             Array data = null;
-            var result = new RootObject();
+            var result = new QuestionObject();
             var url = string.Empty;
             try
             {                

@@ -51,7 +51,7 @@
                                         <td>
                                            <b><a data-bind="text:title, attr: { 'href' : '@Url.Content("~/home/question?id=")' + question_id }" href="#" target="_self"></a></b>
                                             <div class="excerpt">
-                                                <span data-bind="text:body_markdown.length > 150 ? body_markdown.substr(0, body_markdown.lastIndexOf(' ', 150)) + '...' : body_markdown"></span>
+                                                <span data-bind="html:body_markdown.length > 150 ? body_markdown.substr(0, body_markdown.lastIndexOf(' ', 150)) + '...' : body_markdown"></span>
                                             </div>
                                             <div class="tags" data-bind="text:tags">
                                             </div>
@@ -132,61 +132,4 @@
 
     });
     var VM = {};
-</script>
-<script>
-    VM.KiosExam = {
-        isloading: ko.observable(false),
-        items: ko.observableArray([]),
-        item: {
-            init: {},
-            current: ko.observable({
-                tags: ko.observableArray([]),
-                owner: ko.observable(''),
-                is_answered: false,
-                view_count: 0,
-                answer_count: 0,
-                score: 0,
-                last_activity_date: 0,
-                creation_date: 0,
-                question_id: 0,
-                link: '',
-                title: '',
-                body: '',
-                body_markdown: '',
-                last_edit_date: null
-            })
-        }, load: function (step) {
-            VM.KiosExam.items.removeAll();
-            if (VM.KiosExam.isloading())
-                return;
-            VM.KiosExam.isloading(true);          
-           
-            models_ajax("@Url.Content("~/home/getItems")",
-                function (data) {
-                    switch (data.status) {
-                        case "OK":
-                            VM.KiosExam.isloading(false);
-                            var pageshow = "";
-                            if (data.data != null) {
-                                VM.KiosExam.items(data.data);
-                                
-                            }                           
-                           
-
-                            break;
-                        case "ERROR":
-                            VM.KiosExam.isloading(false);
-                            models_notify("ERROR", data.message);
-                            break;
-                    }
-                }, {
-                    search: $('#txtsearch').val(),
-                    page: 1
-                    //page: page == '' ? 1 : page + step,
-                }
-
-            )
-        }        
-
-    }
 </script>

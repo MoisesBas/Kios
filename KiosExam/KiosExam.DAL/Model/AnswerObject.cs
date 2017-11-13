@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KiosExam.DAL.Model
 {
-    public class Answer
+    public class AnswerObject
     {
         public List<Answers> items { get; set; }
         public bool has_more { get; set; }

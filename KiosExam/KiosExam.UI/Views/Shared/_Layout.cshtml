@@ -36,49 +36,87 @@
     <script>
         $("#LOD_modal").modal({ show: true, backdrop: 'static' });
     </script>
-
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="row-fluid" style="height:48px;">
-                <div class="span12">
-                    <div class="pull-right">
-                        <table class="table table-condensed3 table-form font12">
-                            <tr>
-                                <td>
-                                    <input id="txtsearch" type="text" class="input-large" placeholder="Search" />
-                                </td>
-                                <td>
-                                    <a onclick="VM.KiosExam.load()" class="btn btn-primary">Search</a>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    
-                </div>
+    
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background:#0088CC!important">
+        <div class="navbar-inner navbar-form" style="background:#0088CC!important">
+            <a class="brand">Moises Bas - Kiosk (Exam) </a>
+            <div class="pull-right">
+                <input id="txtsearch" type="text" class="input-large" placeholder="Search" />
+                <a href="#" onclick="VM.KiosExam.load()" class="btn btn-info">
+                    <i class="icon-search icon-white"></i>
+                    Search
+                </a>
             </div>
-            
-        </div>
+        </div>      
     </div>
   
-    <div class="container-fluid" style="padding-top:60px!important;">
+    <div class="container-fluid">
 
 
         @RenderBody()
 
 
     </div>
-    <div class="footer">
-        <div class="container-fluid">
-            <div class="row-fluid">
-                <div class="span12" style="padding-left:55px;padding-top:20px;">
-                 
-                </div>               
-            </div>
-        </div>
-    </div>
+   
 
     
+    <script>
+    VM.KiosExam = {
+        isloading: ko.observable(false),
+        items: ko.observableArray([]),
+        item: {
+            init: {},
+            current: ko.observable({
+                tags: ko.observableArray([]),
+                owner: ko.observable(''),
+                is_answered: false,
+                view_count: 0,
+                answer_count: 0,
+                score: 0,
+                last_activity_date: 0,
+                creation_date: 0,
+                question_id: 0,
+                link: '',
+                title: '',
+                body: '',
+                body_markdown: '',
+                last_edit_date: null
+            })
+        }, load: function (step) {
+            VM.KiosExam.items.removeAll();
+            if (VM.KiosExam.isloading())
+                return;
+            VM.KiosExam.isloading(true);
 
+            models_ajax("@Url.Content("~/home/getItems")",
+                function (data) {
+                    switch (data.status) {
+                        case "OK":
+                            VM.KiosExam.isloading(false);
+                            var pageshow = "";
+                            if (data.data != null) {
+                                VM.KiosExam.items(data.data);
+
+                            }
+                            $("#LOD_modal").modal('hide');
+
+                            break;
+                        case "ERROR":
+                            VM.KiosExam.isloading(false);
+                            models_notify("ERROR", data.message);
+                            break;
+                    }
+                }, {
+                    search: $('#txtsearch').val(),
+                    page: 8
+                    //page: page == '' ? 1 : page + step,
+                }
+
+            )
+        }
+
+    }
+    </script>
 
     @*@Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")*@

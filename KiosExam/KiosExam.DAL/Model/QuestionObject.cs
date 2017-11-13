@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KiosExam.DAL.Model
 {
-    public class RootObject
+    public class QuestionObject
     {
         public List<Item> items { get; set; }
 
