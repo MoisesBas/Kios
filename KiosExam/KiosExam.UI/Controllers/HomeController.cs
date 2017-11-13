@@ -9,25 +9,59 @@ using KiosExam.DAL.Model;
 
 namespace KiosExam.UI.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="System.Web.Mvc.Controller" />
     public class HomeController :Controller
     {
+        /// <summary>
+        /// The exam
+        /// </summary>
         protected readonly IKiosExam _exam;
+        /// <summary>
+        /// The pagetotal
+        /// </summary>
         int pagetotal = 1;
+        /// <summary>
+        /// The totalcount
+        /// </summary>
         int totalcount = 0;
+        /// <summary>
+        /// The page
+        /// </summary>
         int page = 1;
+        /// <summary>
+        /// The response status
+        /// </summary>
         string responseStatus = "";
+        /// <summary>
+        /// The response text
+        /// </summary>
         string responseText = "";
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HomeController"/> class.
+        /// </summary>
+        /// <param name="exam">The exam.</param>
         public HomeController(IKiosExam exam)
         {
             _exam = exam;
 
         }
+        /// <summary>
+        /// Indexes this instance.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {            
             return View();
         }
 
-        
+
+        /// <summary>
+        /// Abouts this instance.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -35,6 +69,10 @@ namespace KiosExam.UI.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Contacts this instance.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
@@ -42,12 +80,21 @@ namespace KiosExam.UI.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Questions this instance.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Question()
         {
             return View();
 
         }
 
+        /// <summary>
+        /// Gets the answer.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public ActionResult getAnswer(int id)
         {
             Array data = null;            
@@ -78,6 +125,11 @@ namespace KiosExam.UI.Controllers
             });
         }
 
+        /// <summary>
+        /// Gets the comment.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public ActionResult getComment(int id)
         {            
             Array data = null;            
@@ -107,6 +159,11 @@ namespace KiosExam.UI.Controllers
             });
         }
 
+        /// <summary>
+        /// Getitems the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public ActionResult getitem(int id)
         {
             int totalpages = 1, pagesize = 50, recordcount = 0;
@@ -141,6 +198,12 @@ namespace KiosExam.UI.Controllers
             });
         }
 
+        /// <summary>
+        /// Gets the items.
+        /// </summary>
+        /// <param name="search">The search.</param>
+        /// <param name="page">The page.</param>
+        /// <returns></returns>
         public ActionResult getItems(string search ="", int page = 1)
         {
             

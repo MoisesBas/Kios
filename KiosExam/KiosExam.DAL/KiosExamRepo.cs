@@ -12,10 +12,23 @@ using System.Threading.Tasks;
 
 namespace KiosExam.DAL
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="KiosExam.DAL.Interface.IKiosExamRepo" />
     public class KiosExamRepo : IKiosExamRepo
     {
+        /// <summary>
+        /// The client
+        /// </summary>
         private readonly HttpClient _client;
+        /// <summary>
+        /// The root URL
+        /// </summary>
         private string rootUrl = ConfigurationManager.AppSettings["KiosRoot"];
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KiosExamRepo"/> class.
+        /// </summary>
         public KiosExamRepo()
         {          
 
@@ -29,6 +42,11 @@ namespace KiosExam.DAL
            
         }
 
+        /// <summary>
+        /// Gets the items.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <returns></returns>
         public string  GetItems(string url)
         {
             var response =  _client.GetStringAsync(url).Result;

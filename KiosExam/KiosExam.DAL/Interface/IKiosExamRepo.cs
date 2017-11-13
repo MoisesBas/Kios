@@ -7,8 +7,16 @@ using System.Threading.Tasks;
 
 namespace KiosExam.DAL.Interface
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IKiosExamRepo
     {
+        /// <summary>
+        /// Gets the items.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <returns></returns>
         string GetItems(string url);
     }
 }
